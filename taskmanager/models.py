@@ -5,7 +5,9 @@ class Category(db.Model):
     # Schema for the Categroy table
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(30), unique=True, nullable=False)
-    tasks = db.relationship("Task", backref="category", cascade="all, delete", lazy=True)
+    tasks = db.relationship(
+        "Task", backref="category", cascade="all, delete", lazy=True
+        )
 
     def __repr__(self):
         return self.category_name
@@ -16,7 +18,12 @@ class Task(db.Model):
     task = db.Column(db.String(50), unique=True, nullable=False)
     is_urgent = db.Column(db.Boolean, default=False, nullable=False)
     due_date = db.Column(db.Date, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey("category.id", ondelete="Cascade"), nullable=False)
+    category_id = db.Column(
+        db.Integer, db.ForeignKey(
+            "category.id", ondelete="Cascade"
+        ),
+        nullable=False)
+
     def __repr__(self):
         return "#{0} - Task: {1} | Urgent: {2}".format(
             self.id, self.task, self.is_urgent
